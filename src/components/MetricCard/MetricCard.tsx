@@ -1,4 +1,3 @@
-import React from 'react';
 import './MetricCard.css';
 import type { LucideIcon } from 'lucide-react';
 

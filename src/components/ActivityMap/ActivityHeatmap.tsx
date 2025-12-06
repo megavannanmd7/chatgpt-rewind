@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import './ActivityHeatmap.css';
 
 /**
@@ -57,7 +57,6 @@ export function ActivityHeatmap({ data }: Props) {
     if (week.length) {
       // fill until 7 with future muted days
       while (week.length < 7) {
-        const iso = toISO(new Date(week[week.length - 1].date + 'T00:00:00Z'));
         // Create dummy next date:
         const last = new Date(week[week.length - 1].date + 'T00:00:00Z');
         last.setUTCDate(last.getUTCDate() + 1);

@@ -9,12 +9,12 @@ import PrivacyBanner from "../../components/PrivacyBanner/PrivacyBanner";
 import Footer from "../../components/Footer/Footer";
 import { HelpCircle } from "lucide-react"; // Optional: Add an icon
 import { parseConversations } from "../../processing";
-import { downloadJSON } from "../../processing/downloadJson";
+// import { downloadJSON } from "../../processing/downloadJson";
 import { useNavigate } from "react-router-dom";
 
 
 export default function Home() {
-  const [file, setFile] = useState<File | null>(null);
+  const [, setFile] = useState<File | null>(null);
   const [showProcessing, setShowProcessing] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const navigate = useNavigate();
