@@ -1,0 +1,114 @@
+.home-container {
+  width: 100%;
+  min-height: 100vh;
+  padding: 20px 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ---------------- HERO SECTION ---------------- */
+.hero-section {
+  margin-top: 60px;        
+  margin-bottom: 30px;     
+  text-align: center;
+  max-width: 700px;
+}
+
+.hero-title {
+  font-size: 64px;
+  font-weight: 700;
+  letter-spacing: -1px;
+  color: #e6edf3;
+  line-height: 1.2;
+  word-break: break-word;
+}
+
+.highlight {
+  background: linear-gradient(90deg, #2cc5a7, #f2b348);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle {
+  margin-top: 12px;
+  font-size: 20px;
+  font-weight: 400;
+  color: #c9d1d9;
+  max-width: 650px;
+  margin: 12px auto 0;
+  line-height: 1.4;
+}
+
+/* ---------------- UPLOAD SECTION ---------------- */
+.upload-section {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column; /* CRITICAL FIX: Stacks box and link vertically */
+  align-items: center;    /* CRITICAL FIX: Centers them */
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 10px;
+  margin-bottom: 80px;
+}
+
+/* ---------------- HELP SECTION ---------------- */
+.help-section {
+  margin-top: 10px;            
+  padding: 0 20px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  transform: none;
+}
+
+/* ---------------- HELP LINK BUTTON ---------------- */
+.help-link-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 24px auto 0;
+  background: transparent;
+  border: none;
+  color: #8b949e; 
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 8px 16px;
+  border-radius: 20px;
+}
+
+.help-link-btn:hover {
+  color: #2cc5a7;
+  background: rgba(44, 197, 167, 0.1);
+}
+
+.help-link-btn span {
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* ---------------- RESPONSIVE BREAKPOINTS ---------------- */
+@media (max-width: 900px) {
+  .hero-title { font-size: 40px; }
+  .hero-subtitle { font-size: 17px; }
+  .upload-section { margin-top: 30px; }
+}
+
+@media (max-width: 600px) {
+  .home-container { padding: 20px 10px; }
+  .hero-section { margin-top: 40px; }
+  .hero-title { font-size: 34px; }
+  .hero-subtitle { font-size: 16px; }
+  .help-section { margin-top: 40px; }
+}
+
+@media (max-width: 420px) {
+  .hero-title { font-size: 28px; }
+  .hero-subtitle { font-size: 15px; }
+  .upload-section { padding: 0 5px; }
+  .hero-section { margin-top: 30px; }
+}
+
+.hidden { display: none; }

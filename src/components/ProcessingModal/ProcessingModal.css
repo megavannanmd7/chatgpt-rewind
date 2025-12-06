@@ -1,0 +1,94 @@
+/* Overlay - dark translucent background */
+.pm-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(13, 17, 23, 0.85);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  padding: 20px;
+}
+
+/* Modal container */
+.pm-container {
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 16px;
+  padding: 40px 32px;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Animated loader */
+.pm-loader {
+  width: 48px;
+  height: 48px;
+  border: 4px solid #2cc5a7;
+  border-top-color: transparent;
+  border-radius: 50%;
+  margin: 0 auto 20px;
+  animation: spin 0.9s linear infinite;
+}
+
+/* Title + subtitle */
+.pm-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: #e6edf3;
+}
+
+.pm-subtitle {
+  margin-top: 8px;
+  font-size: 15px;
+  color: #c9d1d9;
+}
+
+/* Steps list */
+.pm-steps {
+  margin-top: 22px;
+  font-size: 14px;
+  color: #8b949e;
+  line-height: 1.6;
+}
+
+/* Loader animation */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Modal fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---------------- RESPONSIVE ---------------- */
+
+@media (max-width: 500px) {
+  .pm-container {
+    padding: 30px 22px;
+  }
+
+  .pm-title {
+    font-size: 20px;
+  }
+
+  .pm-subtitle {
+    font-size: 14px;
+  }
+}

@@ -1,0 +1,27 @@
+.footer {
+  margin-top: 60px;
+  padding: 20px 0;
+  text-align: center;
+  border-top: 1px solid #2a2f36;
+  color: #9ba3ae;
+  font-size: 14px;
+}
+
+.footer-text {
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.footer-text:hover {
+  opacity: 1;
+  color: #e6edf3;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .footer {
+    margin-top: 40px;
+    padding: 16px 0;
+    font-size: 13px;
+  }
+}

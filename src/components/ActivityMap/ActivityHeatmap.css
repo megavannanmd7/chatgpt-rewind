@@ -1,0 +1,55 @@
+.heatmap-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.03);
+  padding: 18px;
+}
+.heatmap-title { margin:0 0 10px 0; font-size:16px; color: #e6edf3; font-weight:600; }
+
+.heatmap-months { display:flex; align-items:center; margin-bottom:8px; gap:10px; }
+.heatmap-month-spacer { width:48px; flex: 0 0 48px; } /* leaves space for weekday labels */
+.heatmap-months-inner { position:relative; flex:1; height:18px; }
+
+.heatmap-month-label {
+  position:absolute;
+  top:0;
+  font-size:12px;
+  color:#9ba3ae;
+}
+
+.heatmap-wrapper { display:flex; gap:12px; align-items:flex-start; }
+.heatmap-weekdays { display:flex; flex-direction:column; gap:6px; width:48px; align-items:flex-end; padding-top:8px; }
+.weekday { font-size:12px; color:#9ba3ae; height:18px; display:flex; align-items:center; }
+.wm-empty { height:18px; }
+
+.heatmap-weeks { flex:1; overflow:auto; -webkit-overflow-scrolling:touch; padding: 6px 0; }
+.heatmap-weeks-inner { display:flex; gap:6px; padding-left:0; }
+
+.heatmap-column { display:flex; flex-direction:column; gap:6px; }
+.heat-dot {
+  width:12px; height:12px; border-radius:999px; background: rgba(255,255,255,0.03);
+  transition: transform 120ms ease, box-shadow 120ms ease, background-color 120ms ease;
+  flex-shrink:0;
+}
+.heat-dot:hover { transform: scale(1.18); box-shadow: 0 6px 18px rgba(0,0,0,0.6); }
+
+/* levels */
+.heat-dot--lvl-0 { background: rgba(255,255,255,0.03); }
+.heat-dot--lvl-1 { background: rgba(57,208,178,0.35); }
+.heat-dot--lvl-2 { background: rgba(57,208,178,0.58); }
+.heat-dot--lvl-3 { background: rgba(57,208,178,0.78); }
+.heat-dot--lvl-4 { background: rgba(57,208,178,1); }
+
+/* out-of-range dim */
+.heat-dot--out { filter: brightness(0.6) saturate(0.4); opacity:0.45; }
+
+/* legend */
+.heatmap-legend { display:flex; align-items:center; gap:10px; margin-top:10px; }
+.legend-dots { display:flex; gap:6px; align-items:center; }
+
+/* small-screen better spacing */
+@media (max-width:700px) {
+  .heatmap-weeks-inner { gap:6px; }
+  .heat-dot { width:11px; height:11px; }
+  .heatmap-month-spacer { width:34px; }
+}
