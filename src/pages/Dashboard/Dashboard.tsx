@@ -19,7 +19,7 @@ import {
 
 import { MetricCard } from "../../components/MetricCard/MetricCard";
 import { ActivityHeatmap } from "../../components/ActivityMap/ActivityHeatmap";
-import { InfoTooltip } from "../../components/InfoTooltip/InfoTooltip";
+import { InfoTooltip } from "../../components/InfoToolTip/InfoToolTip";
 import PrivacyBanner from "../../components/PrivacyBanner/PrivacyBanner";
 
 import "./Dashboard.css";
