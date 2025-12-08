@@ -1,0 +1,156 @@
+/* TotalConversationsCard.css */
+
+.tcc-base {
+  justify-content: flex-start;
+  padding-top: 32px;
+  gap: 12px;
+}
+
+/* --- 1. Hero Section (Indigo Theme) --- */
+.tcc-hero-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.tcc-icon-circle {
+  width: 52px;
+  height: 52px;
+  background: rgba(99, 102, 241, 0.15); /* Indigo tint */
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 13px;
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.15);
+}
+.tcc-icon { color: #818cf8; }
+
+.tcc-label-small {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #a5b4fc; /* Light indigo */
+  text-transform: uppercase;
+  margin: 0;
+  opacity: 0.9;
+}
+
+.tcc-hero-number {
+  font-size: 56px;
+  font-weight: 800;
+  margin: 6px 0;
+  line-height: 1;
+  /* Indigo to White Gradient */
+  background: linear-gradient(180deg, #e0e7ff 20%, #6366f1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 4px 10px rgba(99, 102, 241, 0.3));
+}
+
+/* --- 2. Bridge Text --- */
+.tcc-bridge {
+  font-size: 14px;
+  color: #8b949e;
+  font-weight: 500;
+  margin-bottom: 12px;
+  font-style: italic;
+}
+
+/* --- 3. The List --- */
+.tcc-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tcc-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: transform 0.2s;
+}
+
+/* --- RANK MEDAL STYLING --- */
+.tcc-rank-box {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px; /* Squircle */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.1);
+  color: #8b949e;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+/* Rank 1: Gold */
+.rank-1 .tcc-rank-box {
+  background: linear-gradient(135deg, #fcd34d, #f59e0b);
+  color: #000;
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.4);
+  border: none;
+}
+
+/* Rank 2: Silver */
+.rank-2 .tcc-rank-box {
+  background: linear-gradient(135deg, #e5e7eb, #9ca3af);
+  color: #000;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+  border: none;
+}
+
+/* Rank 3: Bronze */
+.rank-3 .tcc-rank-box {
+  background: linear-gradient(135deg, #fdba74, #ea580c);
+  color: #fff;
+  box-shadow: 0 0 8px rgba(234, 88, 12, 0.3);
+  border: none;
+}
+
+/* Rank 4 & 5: Simple Dark */
+.rank-4 .tcc-rank-box, .rank-5 .tcc-rank-box {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* --- Text Info --- */
+.tcc-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1;
+  overflow: hidden;
+}
+
+.tcc-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #e6edf3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  text-align: left;
+}
+
+.tcc-meta {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: #818cf8; /* Indigo stats */
+  opacity: 0.9;
+}
+
+/* Responsive */
+@media (max-width: 380px) {
+  .tcc-hero-number { font-size: 48px; }
+  .tcc-item { padding: 8px 12px; }
+}

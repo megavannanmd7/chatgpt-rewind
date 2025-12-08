@@ -3,8 +3,8 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;  /* Forces full screen width */
+  height: 100vh; /* Forces full screen height */
   background: rgba(13, 17, 23, 0.88);
   backdrop-filter: blur(4px);
   display: flex;
@@ -12,18 +12,22 @@
   justify-content: center;
   z-index: 60;
   padding: 20px;
+  /* Apply the animation directly to the overlay to prevent layout shift */
+  animation: fadeInOverlay 0.3s ease-out forwards;
 }
 
 /* Modal container */
 .sm-container {
   background: #161b22;
+  margin: auto;
   border: 1px solid #30363d;
   border-radius: 16px;
   padding: 40px 32px;
   max-width: 420px;
   width: 100%;
   text-align: center;
-  animation: fadeIn 0.3s ease-out;
+  /* Add a subtle slide-up animation for the container */
+  animation: slideUp 0.3s ease-out;
 }
 
 /* Title + subtitle */
@@ -77,15 +81,20 @@
   opacity: 0.7;
 }
 
-/* Fade-in animation */
-@keyframes fadeIn {
+/* Overlay fade-in animation */
+@keyframes fadeInOverlay {
   from {
     opacity: 0;
-    transform: translateY(8px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+  }
+}
+
+/* Container slide-up animation */
+@keyframes slideUp {
+  from {
+    transform: translateY(10px);
   }
 }
 

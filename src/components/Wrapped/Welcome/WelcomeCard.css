@@ -1,0 +1,103 @@
+/* WelcomeCard.css */
+
+/* Center everything vertically better */
+.welcome-card-base {
+  justify-content: center;
+  gap: 24px; /* Space between elements */
+}
+
+/* 1. Glowing Icon Box */
+.welcome-icon-box {
+  width: 72px;
+  height: 72px;
+  background: linear-gradient(135deg, #2cc5a7, #f2b348);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 30px rgba(44, 197, 167, 0.4); /* The glow */
+  margin-bottom: 12px;
+  animation: floatIcon 4s ease-in-out infinite;
+}
+
+@keyframes floatIcon {
+  0%, 100% { transform: translateY(0); box-shadow: 0 0 30px rgba(44, 197, 167, 0.4); }
+  50% { transform: translateY(-10px); box-shadow: 0 10px 40px rgba(44, 197, 167, 0.25); }
+}
+
+/* 2. Label "YOUR YEAR IN REVIEW" */
+.welcome-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: #8b949e;
+  text-transform: uppercase;
+  margin: 0;
+  opacity: 0.8;
+}
+
+/* 3. Titles */
+.welcome-title-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0; /* Tight spacing between lines */
+  margin-bottom: 8px;
+}
+
+.wt-gradient {
+  font-size: 42px;
+  font-weight: 800;
+  margin: 0;
+  background: linear-gradient(90deg, #2cc5a7, #f2b348);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1.1;
+}
+
+.wt-white {
+  font-size: 42px;
+  font-weight: 800;
+  margin: 0;
+  color: #e6edf3;
+  line-height: 1.1;
+}
+
+/* 4. Description */
+.welcome-desc {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #9ba3ae;
+  margin: 0;
+  max-width: 280px; /* Force line break nicely */
+}
+
+/* 5. Swipe Hint */
+.swipe-hint-container {
+  margin-top: 48px; /* Push it down a bit */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  opacity: 0.6;
+}
+
+.swipe-line {
+  width: 32px;
+  height: 1px;
+  background: #444;
+}
+
+.swipe-text {
+  font-size: 13px;
+  font-weight: 400;
+  color: #8b949e;
+  letter-spacing: 0.5px;
+}
+
+/* Responsive Scaling */
+@media (max-width: 380px) {
+  .wt-gradient, .wt-white { font-size: 36px; }
+  .welcome-icon-box { width: 60px; height: 60px; }
+}

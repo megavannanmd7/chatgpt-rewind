@@ -1,0 +1,40 @@
+/* gradients.css */
+
+:root {
+  --bg-dark: #0a0f14;
+  --neon-teal: #17f1bb;
+  --neon-green: #4bff87;
+  --neon-yellow: #ffe66d;
+  --neon-blue: #4ad4ff;
+
+  --card-radius: 22px;
+}
+
+.neon-bg {
+  background: radial-gradient(
+      circle at top left,
+      rgba(23, 241, 187, 0.25),
+      transparent 60%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      rgba(255, 230, 109, 0.15),
+      transparent 70%
+    ),
+    #0a0f14;
+}
+
+.neon-glow {
+  filter: drop-shadow(0 0 12px rgba(23, 241, 187, 0.4));
+}
+
+.neon-text {
+  background: linear-gradient(
+    90deg,
+    var(--neon-teal),
+    var(--neon-green),
+    var(--neon-yellow)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

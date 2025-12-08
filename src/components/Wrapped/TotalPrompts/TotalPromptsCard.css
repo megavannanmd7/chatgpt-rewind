@@ -1,0 +1,90 @@
+/* TotalPromptsCard.css */
+
+.tpc-base {
+  justify-content: center;
+  gap: 20px;
+}
+
+/* 1. Icon Box */
+.tpc-icon-box {
+  width: 64px;
+  height: 64px;
+  background: rgba(44, 197, 167, 0.1); /* Subtle teal tint */
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  border: 1px solid rgba(44, 197, 167, 0.2);
+  box-shadow: 0 0 30px rgba(44, 197, 167, 0.1);
+  animation: floatIcon 4s ease-in-out infinite;
+}
+
+.tpc-icon {
+  color: #2cc5a7;
+}
+
+/* 2. "YOU SENT" Label */
+.tpc-label-small {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: #8b949e;
+  text-transform: uppercase;
+  margin: 0;
+  opacity: 0.8;
+}
+
+/* 3. Hero Number */
+.tpc-hero-number {
+  font-size: 84px; /* Big and bold */
+  font-weight: 800;
+  margin: 0;
+  line-height: 1;
+  /* The signature gradient from your reference */
+  background: linear-gradient(135deg, #f2c94c 0%, #f2994a 100%); /* Gold/Orange gradient */
+  /* OR try the Teal/Gold one: */
+  /* background: linear-gradient(90deg, #f2c94c, #2cc5a7); */
+  
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  
+  /* Slight drop shadow to lift it off the dark background */
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.3));
+}
+
+/* 4. "prompts to ChatGPT" */
+.tpc-subtitle {
+  font-size: 24px;
+  font-weight: 700;
+  color: #e6edf3;
+  margin: 0;
+}
+
+/* 5. Footer Average */
+.tpc-footer {
+  margin-top: 32px;
+  font-size: 16px;
+  color: #8b949e;
+  font-weight: 400;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 10px 20px;
+  border-radius: 99px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.tpc-footer strong {
+  color: #e6edf3;
+  font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 380px) {
+  .tpc-hero-number { font-size: 64px; }
+  .tpc-subtitle { font-size: 20px; }
+}
+
+@keyframes floatIcon {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}

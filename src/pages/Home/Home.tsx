@@ -18,6 +18,8 @@ export default function Home() {
   const [showProcessing, setShowProcessing] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const navigate = useNavigate();
+  const goWrapped = () => navigate("/wrapped");
+
 
 
   // 2. Create a ref for the help section
@@ -64,8 +66,11 @@ export default function Home() {
 
 
   return (
+  <>
     <div className="home-container">
-      <PrivacyBanner />
+      <div className="home-banner-wrapper">
+        <PrivacyBanner />
+      </div>
 
       <section className="hero-section">
         <h1 className="hero-title">
@@ -78,25 +83,30 @@ export default function Home() {
 
       <section className="upload-section">
         <UploadZone onFileSelected={handleFileUpload} />
-        
-        {/* 4. Add the Link Here */}
         <button onClick={scrollToHelp} className="help-link-btn">
           <HelpCircle size={16} />
           <span>Where do I find my conversations.json?</span>
         </button>
       </section>
 
-      {/* 5. Attach the ref to the help section */}
       <section className="help-section" ref={helpSectionRef}>
         <HowToGetFile />
       </section>
 
-      {showProcessing && <ProcessingModal />}
-      {showSuccess && (
-        <SuccessModal onDashboard={() => navigate("/dashboard")} />
-
-      )}
       <Footer />
     </div>
-  );
+
+    {/* ⬇⬇ OUTSIDE CONTAINER (IMPORTANT!) */}
+    {showProcessing && <ProcessingModal />}
+    {showSuccess && (
+  <SuccessModal 
+    onDashboard={() => navigate("/dashboard")}
+    onWrapped={() => navigate("/wrapped")}
+  />
+)}
+
+
+  </>
+);
+//dd
 }

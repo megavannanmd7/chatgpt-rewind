@@ -1,0 +1,150 @@
+/* SummaryCard.css */
+
+.summary-card-standalone {
+  isolation: isolate;
+  /* Background is now handled inline in TSX for gradients */
+}
+
+/* --- Marquee --- */
+.sum-marquee-container {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: 20px 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.sum-marquee-row {
+  font-size: 24px;
+  font-weight: 900;
+  white-space: nowrap;
+  color: #fff;
+  text-transform: uppercase;
+  width: 200%;
+}
+
+@keyframes scrollLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+@keyframes scrollRight { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
+
+.scroll-left { animation: scrollLeft linear infinite; }
+.scroll-right { animation: scrollRight linear infinite; }
+
+/* --- Spotlight --- */
+.sum-spotlight {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  /* Subtler spotlight to match new colorful BG */
+  background: radial-gradient(circle at top center, rgba(255, 255, 255, 0.1), transparent 70%);
+  z-index: 0; pointer-events: none;
+}
+
+/* --- Content --- */
+.sum-content-layer {
+  z-index: 1;
+  width: 100%;
+  padding-bottom: 0;
+}
+
+/* Header */
+.sum-logo-box {
+  width: 48px; height: 48px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+  margin-bottom: 8px;
+}
+.sum-icon { color: #f2c94c; }
+
+.sum-header {
+  display: flex; flex-direction: column; align-items: center;
+}
+
+.sum-header h1 {
+  font-size: 28px;
+  font-weight: 900; letter-spacing: 2px;
+  /* FIX: Removed gradient text to solve the "White Box" issue */
+  color: #ffffff; 
+  background: none;
+  -webkit-text-fill-color: initial;
+  margin: 0;
+  text-align: center;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+/* Grid */
+.sum-grid {
+  display: grid; 
+  grid-template-columns: 1fr 1fr; 
+  /* INCREASED GAP from 8px to 12px to fix "clumsy" look */
+  gap: 12px; 
+  width: 100%;
+}
+
+.sum-stat-box {
+  border-radius: 14px; 
+  padding: 14px 10px; /* Slightly more padding */
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  /* CHANGED: Solid opaque background that stands out */
+  background-color: #1e293b; 
+  border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle border for definition */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.full-width { grid-column: span 2; flex-direction: row; gap: 12px; }
+
+.sum-stat-box label {
+  font-size: 10px; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 1px; margin-bottom: 4px;
+}
+.sum-stat-box span { font-size: 20px; font-weight: 800; color: #fff; }
+
+/* Colors */
+.theme-purple label { color: #c4b5fd; }
+.theme-blue label   { color: #93c5fd; }
+.theme-green label  { color: #6ee7b7; }
+.theme-orange label { color: #fdba74; }
+.theme-red label    { color: #fda4af; }
+
+/* Top Conversation Box */
+.sum-top-convo {
+  width: 100%; text-align: center;
+  /* Match the opaque style of other cards */
+  background-color: #1e293b; 
+  padding: 18px;
+  border-radius: 16px;
+  border: 1px solid rgba(44, 197, 167, 0.3); /* Green tint border */
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  display: flex; flex-direction: column; justify-content: center;
+}
+
+.sum-convo-label {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  color: #2cc5a7; margin-bottom: 6px; 
+}
+.sum-convo-label span { font-size: 10px; font-weight: 800; letter-spacing: 2px; }
+
+.sum-convo-title {
+  font-size: 17px; color: #fff; margin: 0 0 4px 0;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.sum-convo-count { font-size: 12px; color: #94a3b8; margin: 0; }
+
+/* Buttons */
+.sum-actions { 
+  display: flex; gap: 10px; width: 100%; 
+  margin-top: 0; 
+  padding-bottom: 0; 
+  z-index: 10; 
+  flex-shrink: 0; 
+}
+.sum-btn {
+  flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 12px; border-radius: 12px; font-weight: 600; font-size: 13px; cursor: pointer; border: none;
+}
+.sum-btn.primary { background: #e6edf3; color: #000; }
+.sum-btn.secondary { background: rgba(255, 255, 255, 0.1); color: #fff; border: 1px solid rgba(255,255,255,0.1); }

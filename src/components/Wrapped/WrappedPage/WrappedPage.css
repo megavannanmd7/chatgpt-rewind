@@ -1,0 +1,165 @@
+/* WrappedPage.css */
+
+/* 1. The Immersive Container */
+.wrapped-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000000;
+  /* Subtle Aurora Background Effect */
+  background-image: 
+    radial-gradient(circle at 50% 30%, rgba(44, 197, 167, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(242, 179, 76, 0.08) 0%, transparent 50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 100; /* On top of everything */
+  color: #fff;
+  font-family: Inter, sans-serif;
+}
+
+/* 2. Progress Bar Container (Top) */
+.story-progress {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 420px; /* Match card width */
+  display: flex;
+  gap: 4px;
+  z-index: 10;
+}
+
+.progress-segment {
+  flex: 1;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #fff;
+  transition: width 0.1s linear;
+}
+
+.progress-fill.completed { width: 100%; }
+.progress-fill.active { width: 100%; } /* You can animate this if you want time-based */
+.progress-fill.pending { width: 0%; }
+
+
+/* 3. The Viewport (Holds the cards) */
+.wrapped-viewport {
+  width: 100%;
+  max-width: 400px; /* The "Mobile Phone" width */
+  aspect-ratio: 9 / 16; /* Story Proportions */
+  max-height: 85vh;
+  position: relative;
+  /* The Card Container Styling */
+  background: #101010; 
+  border-radius: 24px;
+  box-shadow: 
+    0 20px 50px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.1); /* Subtle border */
+  overflow: hidden;
+}
+
+/* 4. Carousel Mechanism */
+.wrapped-carousel {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  touch-action: pan-y; /* Allow vertical scroll inside, block horizontal for swipe */
+}
+
+.wrapped-slide {
+  min-width: 100%;
+  height: 100%;
+  /* REMOVE padding here. This was causing the "box within a box" gap. */
+  padding: 0; 
+  box-sizing: border-box;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Dim inactive cards slightly */
+.wrapped-slide:not(.active-card) {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.wrapped-card-inner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 5. Navigation Buttons (Desktop) */
+.nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: #fff;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  transition: all 0.2s;
+  backdrop-filter: blur(10px);
+}
+
+.nav-btn:hover { background: rgba(255, 255, 255, 0.2); }
+.nav-btn:disabled { opacity: 0; pointer-events: none; }
+/* .nav-btn.left { left: 20px; }
+.nav-btn.right { right: 20px; } */
+.nav-btn.left {
+  left: calc(50% - 260px); /* 200px (half card) + 60px padding */
+}
+
+.nav-btn.right {
+  right: calc(50% - 260px);
+}
+/* 6. Loading State */
+.wrapped-loading {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  color: #2cc5a7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: monospace;
+  font-size: 1.2rem;
+}
+
+/* Hide Nav Buttons on Mobile */
+@media (max-width: 600px) {
+  .nav-btn { display: none; }
+  .wrapped-viewport {
+    max-width: 100%;
+    height: 100%;
+    max-height: 100%;
+    border-radius: 0;
+    border: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-btn { display: none; } /* Hide on mobile/tablets */
+}

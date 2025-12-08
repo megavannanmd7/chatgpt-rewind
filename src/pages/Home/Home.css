@@ -8,6 +8,15 @@
   align-items: center;
 }
 
+/* Find this class in Home.css */
+.home-banner-wrapper {
+  width: 100%;
+  /* We remove max-width here and let the child handle sizing */
+  display: flex;           /* Turn on Flexbox */
+  justify-content: center; /* Force child to center immediately */
+  margin-bottom: 20px;
+}
+
 /* ---------------- HERO SECTION ---------------- */
 .hero-section {
   margin-top: 60px;        
