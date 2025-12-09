@@ -1,13 +1,12 @@
-import { useState, useRef } from "react"; // 1. Import useRef
+import { useState, useRef } from "react"; 
 import "./Home.css";
-
 import UploadZone from "../../components/UploadZone/UploadZone";
 import ProcessingModal from "../../components/ProcessingModal/ProcessingModel";
 import SuccessModal from "../../components/SuccessModal/SuccessModal";
 import HowToGetFile from "../../components/HowToGetFile/HowToGetFile";
 import PrivacyBanner from "../../components/PrivacyBanner/PrivacyBanner";
 import Footer from "../../components/Footer/Footer";
-import { HelpCircle } from "lucide-react"; // Optional: Add an icon
+import { HelpCircle } from "lucide-react"; 
 import { parseConversations } from "../../processing";
 // import { downloadJSON } from "../../processing/downloadJson";
 import { useNavigate } from "react-router-dom";
@@ -18,14 +17,9 @@ export default function Home() {
   const [showProcessing, setShowProcessing] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const navigate = useNavigate();
-  const goWrapped = () => navigate("/wrapped");
 
-
-
-  // 2. Create a ref for the help section
   const helpSectionRef = useRef<HTMLDivElement>(null);
 
-  // 3. Create the scroll function
   const scrollToHelp = () => {
     helpSectionRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -46,11 +40,9 @@ export default function Home() {
       const result = parseConversations(jsonData);
       sessionStorage.setItem("rewindStats", JSON.stringify(result));
 
-
       // Save output locally (for testing)
-    //   downloadJSON(result, "rewind-output.json");
+      // downloadJSON(result, "rewind-output.json");
 
-      // After everything is done, show success
       setShowProcessing(false);
       setShowSuccess(true);
 
@@ -67,7 +59,7 @@ export default function Home() {
 
   return (
   <>
-    <div className="home-container">
+    <div className="home-container hero-glow">
       <div className="home-banner-wrapper">
         <PrivacyBanner />
       </div>
@@ -77,7 +69,7 @@ export default function Home() {
           ChatGPT <span className="highlight">Rewind ’25</span>
         </h1>
         <p className="hero-subtitle">
-          Your year in ChatGPT — analyzed beautifully.
+          Your year in ChatGPT, analyzed beautifully.
         </p>
       </section>
 
@@ -96,7 +88,6 @@ export default function Home() {
       <Footer />
     </div>
 
-    {/* ⬇⬇ OUTSIDE CONTAINER (IMPORTANT!) */}
     {showProcessing && <ProcessingModal />}
     {showSuccess && (
   <SuccessModal 
@@ -104,9 +95,6 @@ export default function Home() {
     onWrapped={() => navigate("/wrapped")}
   />
 )}
-
-
   </>
 );
-//dd
 }

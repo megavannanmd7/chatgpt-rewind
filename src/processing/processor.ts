@@ -1,32 +1,33 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Conversation, RewindStats } from "./types";
 
 const DAYS = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 const HOURS = Array.from({ length: 24 }, (_, i) => `${i.toString().padStart(2, "0")}:00`);
 
-// STOP WORDS (Refined list)
+// STOP_WORDS same as yours...
 const STOP_WORDS = new Set([
-  "the", "and", "for", "with", "that", "this", "from", "your", "have", "are", 
-  "was", "can", "you", "not", "but", "what", "all", "were", "when", "how", 
-  "one", "will", "chatgpt", "openai", "please", "thanks", "hello", "about", 
-  "into", "user", "assistant", "there", "their", "which", "would", "they", 
-  "more", "some", "other", "using", "been", "also", "than", "should", "only",
-  "write", "create", "make", "build", "generate", "explain", "help", "show", 
-  "give", "find", "list", "need", "want", "check", "update", "change", "add", 
-  "remove", "fix", "edit", "convert", "turn", "getting", "started", "working", 
-  "using", "setting", "setup", "writing", "making", "doing", "optimize", 
-  "improve", "review", "analyze", "format", "debug", "refactor", "best",
-  "better", "good", "bad", "simple", "complex", "basic", "advanced",
-  "guide", "tutorial", "overview", "summary", "explanation", "example", 
-  "examples", "introduction", "conclusion", "intro", "part", "code", 
-  "snippet", "script", "file", "files", "issue", "issues", "error", 
-  "errors", "warning", "warnings", "solution", "solutions", "answer", 
-  "answers", "question", "questions", "response", "request", "difference", 
-  "comparison", "versus", "between", "documentation", "docs", "practice", 
-  "practices", "step", "steps", "sure", "certainly", "here", "sorry",
-  "assistance", "assist", "support", "visualize", "visualization", "design", 
-  "redesign", "mode", "model", "conversation", "chat", "session", "expert",
-  "implementation", "analysis", "learning", "explained"
+  "the","and","for","with","that","this","from","your","have","are",
+  "was","can","you","not","but","what","all","were","when","how",
+  "one","will","chatgpt","openai","please","thanks","hello","about",
+  "into","user","assistant","there","their","which","would","they",
+  "more","some","other","using","been","also","than","should","only",
+  "write","create","make","build","generate","explain","help","show",
+  "give","find","list","need","want","check","update","change","add",
+  "remove","fix","edit","convert","turn","getting","started","working",
+  "using","setting","setup","writing","making","doing","optimize",
+  "improve","review","analyze","format","debug","refactor","best",
+  "better","good","bad","simple","complex","basic","advanced",
+  "guide","tutorial","overview","summary","explanation","example",
+  "examples","introduction","conclusion","intro","part","code",
+  "snippet","script","file","files","issue","issues","error",
+  "errors","warning","warnings","solution","solutions","answer",
+  "answers","question","questions","response","request","difference",
+  "comparison","versus","between","documentation","docs","practice",
+  "practices","step","steps","sure","certainly","here","sorry",
+  "assistance","assist","support","visualize","visualization","design",
+  "redesign","mode","model","conversation","chat","session","expert",
+  "implementation","analysis","learning","explained"
 ]);
 
 const START_2025 = new Date("2025-01-01T00:00:00Z").getTime();
@@ -36,19 +37,25 @@ function normalize100(value: number, max: number): number {
   return Math.min(100, Math.round((value / max) * 100));
 }
 
-// --------------------------------------------------
-// HELPER: GENERIC IMAGE DETECTION
-// --------------------------------------------------
+// Helper: convert create_time (seconds or ms) -> ms
+function getTimestampMs(create_time?: number): number | null {
+  if (!create_time && create_time !== 0) return null;
+  // if timestamp looks like milliseconds (very large), return as-is
+  if (create_time > 1e12) return create_time;
+  // otherwise assume seconds
+  return create_time * 1000;
+}
+
 const isImageObject = (obj: any): boolean => {
   if (!obj || typeof obj !== "object") return false;
   return (
     obj.content_type === "image_asset" ||
     obj.content_type === "image_url" ||
     obj.type === "image" ||
-    obj.asset_pointer?.startsWith("file-service://") ||
-    obj.mime_type?.startsWith("image/") ||
+    Boolean(obj.asset_pointer?.startsWith?.("file-service://")) ||
+    typeof obj.mime_type === "string" && obj.mime_type.startsWith("image/") ||
     (typeof obj.url === "string" && (
-      obj.url.startsWith("blob:") || 
+      obj.url.startsWith("blob:") ||
       obj.url.includes("files.oaiusercontent.com") ||
       obj.url.match(/\.(png|jpg|jpeg|gif|webp)$/i)
     ))
@@ -64,37 +71,39 @@ export function parseConversations(conversations: Conversation[]): RewindStats {
   const dayCount: Record<string, number> = {};
   const hourCount: Record<string, number> = {};
   const dateCount: Record<string, number> = {};
-
-  // For Busiest Date Detailed Analysis
   const dailyBreakdown: Record<string, Record<string, number>> = {};
 
   const conversationStats: { title: string; messageCount: number }[] = [];
   const topicCount: Record<string, number> = {};
 
-  let voiceConversations = 0;
+  // improved counters
+  let voiceMessagesCount = 0; // total voice messages (if you want per-message metric)
+  const voiceConvoSet = new Set<string>(); // unique conversations with voice
+  const seenImageKeys = new Set<string>(); // dedupe images globally
+  const seenFileKeys = new Set<string>(); // dedupe files globally
+
   let imageGenerations = 0;
   let fileUploads = 0;
 
   conversations.forEach((conv) => {
+    const convId = conv.id;
     let convUserMessageCount = 0;
     let has2025Activity = false;
-    const title = conv.title || "Untitled";
 
     Object.values(conv.mapping).forEach((node) => {
       const msg = node.message;
-      if (!msg || !msg.create_time) return;
+      if (!msg) return;
 
-      const ts = msg.create_time * 1000;
-      if (ts < START_2025 || ts > END_2025) return;
+      const tsMs = getTimestampMs(msg.create_time);
+      if (!tsMs) return;
+      if (tsMs < START_2025 || tsMs > END_2025) return;
 
       const role = msg.author?.role;
       const metadata = msg.metadata || {};
       const content = msg.content || {};
       const ct = content.content_type || "";
 
-      // ==================================================
-      // USER MESSAGES (Counts & Uploads)
-      // ==================================================
+      // USER messages (counts & uploads)
       if (role === "user") {
         if (metadata.is_visually_hidden_from_conversation) return;
 
@@ -102,8 +111,8 @@ export function parseConversations(conversations: Conversation[]): RewindStats {
         convUserMessageCount++;
         totalPrompts++;
 
-        // WORD & CHAR COUNT
-        const parts = content.parts || [];
+        // WORD & CHAR COUNT (only string parts)
+        const parts = Array.isArray(content.parts) ? content.parts : [];
         const text = parts
           .map((p) => (typeof p === "string" ? p : ""))
           .join(" ")
@@ -111,80 +120,126 @@ export function parseConversations(conversations: Conversation[]): RewindStats {
 
         if (text) {
           totalWords += text.split(/\s+/).filter(Boolean).length;
-          totalCharacters += text.length; 
+          totalCharacters += text.length;
         }
 
-        // DATE METRICS
-        const date = new Date(ts);
-        const dateStr = date.toISOString().split("T")[0]; // "2025-05-20"
-        
+        // Date metrics
+        const date = new Date(tsMs);
+        const dateStr = date.toISOString().split("T")[0];
+
         activeDaysSet.add(dateStr);
         dayCount[DAYS[date.getDay()]] = (dayCount[DAYS[date.getDay()]] || 0) + 1;
         hourCount[HOURS[date.getHours()]] = (hourCount[HOURS[date.getHours()]] || 0) + 1;
         dateCount[dateStr] = (dateCount[dateStr] || 0) + 1;
 
-        // Daily Breakdown Logic 
+        // daily breakdown per conversation title
+        const title = conv.title || "Untitled";
         if (!dailyBreakdown[dateStr]) dailyBreakdown[dateStr] = {};
         dailyBreakdown[dateStr][title] = (dailyBreakdown[dateStr][title] || 0) + 1;
 
-        // --------------------------------------------------
-        // DETECT FILE UPLOADS
-        // --------------------------------------------------
+        // FILE UPLOAD detection (attachments array or inline file links)
         if (Array.isArray(metadata.attachments) && metadata.attachments.length > 0) {
-          fileUploads += metadata.attachments.length;
-        } 
-        else if (parts.some((p) => typeof p === "string" && (p.includes("file-service") || p.includes("files.oaiusercontent.com")))) {
-          fileUploads++;
+          for (const att of metadata.attachments) {
+            // attempt a stable key for dedupe
+            const key = att?.url || att?.asset_pointer || att?.id || JSON.stringify(att);
+            if (key && !seenFileKeys.has(key)) {
+              seenFileKeys.add(key);
+              fileUploads++;
+            }
+          }
+        } else {
+          // search in text parts for file-service links
+          const linkFound = parts.some((p) => typeof p === "string" && (p.includes("file-service://") || p.includes("files.oaiusercontent.com")));
+          if (linkFound) {
+            // count once per message
+            const msgKey = `${convId}:${tsMs}:file`;
+            if (!seenFileKeys.has(msgKey)) {
+              seenFileKeys.add(msgKey);
+              fileUploads++;
+            }
+          }
         }
 
-        // --------------------------------------------------
-        // DETECT VOICE INPUTS
-        // --------------------------------------------------
+        // VOICE detection in user message
         const hasAudio =
           ct === "audio" ||
           ct === "input_text_with_audio" ||
           metadata.is_voice_message === true ||
           metadata.voice_mode_message === true ||
-          metadata.modalities?.includes("audio") ||
-          (Array.isArray(content.parts) && content.parts.some((p: any) => p?.audio));
+          (Array.isArray(metadata.modalities) && metadata.modalities.includes("audio")) ||
+          (Array.isArray(content.parts) && content.parts.some((p: any) => p && typeof p === "object" && p.audio));
 
-        if (hasAudio) voiceConversations++;
+        if (hasAudio) {
+          voiceMessagesCount++;
+          voiceConvoSet.add(convId);
+        }
       }
 
-      // ==================================================
-      // ASSISTANT / TOOL MESSAGES (Detect Generated Images)
-      // ==================================================
+      // ASSISTANT / TOOL messages: detect images (dedupe)
       if (role === "assistant" || role === "tool") {
-        
+        // primary quick checks
         if (ct === "image_asset" || ct === "image_url") {
-          imageGenerations++;
+          const key = content?.asset_pointer || content?.url || `${convId}:${tsMs}:img:${ct}`;
+          if (key && !seenImageKeys.has(key)) {
+            seenImageKeys.add(key);
+            imageGenerations++;
+          }
         }
 
+        // content.parts might include image objects or results
         if (Array.isArray(content.parts)) {
           for (const part of content.parts) {
             if (isImageObject(part)) {
-              imageGenerations++;
+              const key = part?.url || part?.asset_pointer || JSON.stringify(part).slice(0, 200);
+              if (key && !seenImageKeys.has(key)) {
+                seenImageKeys.add(key);
+                imageGenerations++;
+              }
             }
-            if (part && typeof part === 'object' && Array.isArray(part.results)) {
-               part.results.forEach((res: any) => {
-                 if (isImageObject(res)) imageGenerations++;
-               });
+            if (part && typeof part === "object" && Array.isArray(part.results)) {
+              for (const res of part.results) {
+                if (isImageObject(res)) {
+                  const key = res?.url || res?.asset_pointer || JSON.stringify(res).slice(0,200);
+                  if (key && !seenImageKeys.has(key)) {
+                    seenImageKeys.add(key);
+                    imageGenerations++;
+                  }
+                }
+              }
             }
           }
         }
 
+        // content.images array
         if (Array.isArray((content as any).images)) {
-          const imgs = (content as any).images.filter(isImageObject);
-          imageGenerations += imgs.length;
+          for (const img of (content as any).images) {
+            if (isImageObject(img)) {
+              const key = img?.url || img?.asset_pointer || JSON.stringify(img).slice(0,200);
+              if (key && !seenImageKeys.has(key)) {
+                seenImageKeys.add(key);
+                imageGenerations++;
+              }
+            }
+          }
         }
 
-        if (Array.isArray(metadata.attachments)) {
-          const imgs = metadata.attachments.filter(isImageObject);
-          imageGenerations += imgs.length;
+        // attachments metadata in assistant messages
+        if (Array.isArray(msg.metadata?.attachments)) {
+          for (const att of msg.metadata.attachments) {
+            if (isImageObject(att)) {
+              const key = att?.url || att?.asset_pointer || JSON.stringify(att).slice(0,200);
+              if (!seenImageKeys.has(key)) {
+                seenImageKeys.add(key);
+                imageGenerations++;
+              }
+            }
+          }
         }
       }
     });
 
+    // end node loop
+    // record conversation stats only if it had user prompts in 2025
     if (has2025Activity && convUserMessageCount > 0) {
       conversationStats.push({
         title: conv.title || "Untitled",
@@ -201,9 +256,7 @@ export function parseConversations(conversations: Conversation[]): RewindStats {
     }
   });
 
-  // ------------------------------------------------------------
   // AGGREGATION
-  // ------------------------------------------------------------
   const activeDays = activeDaysSet.size;
   const avgPromptsPerDay = activeDays ? Math.round(totalPrompts / activeDays) : 0;
   const avgMessageLength = totalPrompts ? Math.round(totalWords / totalPrompts) : 0;
@@ -212,24 +265,19 @@ export function parseConversations(conversations: Conversation[]): RewindStats {
   const activityByDay = DAYS.map((d) => ({ day: d, count: dayCount[d] || 0 }));
   const activityByHour = HOURS.map((h) => ({ hour: h, count: hourCount[h] || 0 }));
 
-  // 1. Find Busiest Day of Week (e.g. "Monday")
   const busiestDayOfWeek = activityByDay.reduce((a, b) => (b.count > a.count ? b : a), { day: "N/A", count: 0 }).day;
-
-  // 2. Find Busiest Hour
   const busiestHour = activityByHour.reduce((a, b) => (b.count > a.count ? b : a), { hour: "N/A", count: 0 }).hour;
 
-  // 3. Find Busiest Date of Year (e.g. "2025-05-20")
   const busiestDateEntry = Object.entries(dateCount).reduce(
     (max, [date, count]) => (count > max.count ? { date, count } : max),
     { date: "N/A", count: 0 }
   );
 
-  // Hydrate Busiest Date with Topic Details
   const busiestDateDetails = dailyBreakdown[busiestDateEntry.date] || {};
   const busiestDateConversations = Object.entries(busiestDateDetails)
     .map(([title, count]) => ({ title, count }))
     .sort((a, b) => b.count - a.count)
-    .slice(0, 3); // Top 3 conversations that day
+    .slice(0, 3);
 
   const busiestDateOfTheYear = {
     date: busiestDateEntry.date,
@@ -264,7 +312,7 @@ export function parseConversations(conversations: Conversation[]): RewindStats {
     .map(([topic, count]) => ({ topic, count }));
 
   const multimodalUsage = [
-    { name: "Voice", value: voiceConversations },
+    { name: "Voice", value: voiceConvoSet.size },
     { name: "Images", value: imageGenerations },
     { name: "Files", value: fileUploads },
   ];
@@ -272,28 +320,29 @@ export function parseConversations(conversations: Conversation[]): RewindStats {
   const nightMessages =
     (hourCount["00:00"] || 0) + (hourCount["01:00"] || 0) + (hourCount["02:00"] || 0) +
     (hourCount["03:00"] || 0) + (hourCount["04:00"] || 0);
-  
+
   const nightOwlIndex = normalize100(nightMessages * 3, totalPrompts || 1);
   const consistencyScore = normalize100(activeDays, 300);
   const productivityScore = normalize100(totalPrompts + conversationStats.length * 2, 4000);
   const curiosityScore = 0;
 
+  // IMPORTANT: totalConversations is now the number of conversations WITH user activity in 2025
+  const totalConversations = conversationStats.length;
+
   const monthlyTopics: any[] = [];
 
   return {
     totalPrompts, totalWords, totalCharacters,
-    activeDays, totalConversations: conversations.length,
+    activeDays, totalConversations,
     avgPromptsPerDay, avgMessageLength, avgCharLength,
-    
     activityByDay, activityByHour,
-    
-    busiestDayOfWeek, // "Monday"
-    busiestDateOfTheYear, // { date: "...", count: 120, conversations: [...] }
+    busiestDayOfWeek,
+    busiestDateOfTheYear,
     busiestHour,
-
     topConversations, conversationSizes,
     streakData, heatmapData, topTopics,
-    voiceConversations, imageGenerations, fileUploads, multimodalUsage,
+    voiceConversations: voiceConvoSet.size,
+    imageGenerations, fileUploads, multimodalUsage,
     curiosityScore, nightOwlIndex, consistencyScore, productivityScore,
     monthlyTopics,
   };

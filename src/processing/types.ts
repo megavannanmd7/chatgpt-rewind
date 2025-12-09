@@ -9,6 +9,8 @@ export interface Message {
     content_type: string;
     parts?: (string | any)[];
     images?: any[]; 
+    asset_pointer?: string;
+    url?: string;
   };
   create_time?: number;
   metadata?: {

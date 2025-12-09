@@ -1,4 +1,4 @@
-/* Outer upload box (Matches 'uploadzone-container') */
+/* Outer upload box */
 .uploadzone-container {
   position: relative;
   width: 100%;
@@ -11,7 +11,7 @@
   cursor: pointer;
   text-align: center;
   transition: all 0.25s ease;
-  box-sizing: border-box; /* Ensures padding doesn't break width */
+  box-sizing: border-box; 
 }
 
 /* Hover style */
@@ -34,7 +34,7 @@
   border: 2px solid rgba(44, 197, 167, 0.35);
   transition: 0.3s ease;
   border-radius: 8px;
-  pointer-events: none; /* Prevents corners from blocking clicks */
+  pointer-events: none; 
 }
 
 .uploadzone-container:hover .corner {
@@ -46,14 +46,14 @@
 .bl { bottom: 10px; left: 10px; border-right: none; border-top: none; border-radius: 0 0 0 8px; }
 .br { bottom: 10px; right: 10px; border-left: none; border-top: none; border-radius: 0 0 8px 0; }
 
-/* Inner content (Matches 'uploadzone-content') */
+/* Inner content */
 .uploadzone-content {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-/* Icon area (Matches 'upload-icon-wrapper') */
+/* Icon area */
 .upload-icon-wrapper {
   width: 80px;
   height: 80px;
@@ -71,12 +71,12 @@
   transform: scale(1.15) rotate(4deg);
 }
 
-/* Icon (Matches 'upload-icon') */
+/* Icon */
 .upload-icon {
   font-size: 32px;
   color: #b8c2cc;
   transition: 0.3s ease;
-  display: flex; /* Ensures emoji/icon centers correctly */
+  display: flex; 
 }
 
 .json {
@@ -101,7 +101,7 @@
   color: #2cc5a7;
 }
 
-/* Subtext (Matches 'upload-subtext') */
+/* Subtext */
 .upload-subtext {
   font-size: 14px;
   color: #9aa5b1;
@@ -120,7 +120,7 @@
   font-size: 12px;
 }
 
-/* Hide file input (Matches 'file-input-hidden') */
+/* Hide file input */
 .file-input-hidden {
   display: none;
 }
@@ -133,4 +133,18 @@
   .upload-title {
     font-size: 18px;
   }
+}
+
+.upload-main-icon {
+  width: 40px;
+  height: 40px;
+  color: #b8c2cc;
+  transition: 0.3s ease;
+}
+
+.json-icon {
+  width: 40px;
+  height: 40px;
+  color: #2cc5a7;
+  animation: float 1.2s infinite ease-in-out;
 }

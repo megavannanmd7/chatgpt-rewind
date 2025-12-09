@@ -10,7 +10,7 @@ export default function PrivacyBanner() {
     <div className="pb-container">
       <p className="pb-message">
         Your data never leaves your device. All processing happens locally in your
-        browser — nothing is uploaded or stored.
+        browser, nothing is uploaded or stored.
       </p>
 
       <button className="pb-close" onClick={() => setClosed(true)}>

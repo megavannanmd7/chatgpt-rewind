@@ -1,15 +1,35 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { createPortal } from "react-dom";
 import "./ProcessingModal.css";
+import { useEffect, useState } from "react";
 
 export default function ProcessingModal() {
-  // The modal is always visible when it's mounted.
-  // We can remove the state and effect for visibility.
-  // The parent component should control whether this modal is in the DOM.
-  // The CSS will handle the fade-in animation on its own.
+  const steps = [
+  "Parsing conversations…",
+  "Analyzing prompts…",
+  "Generating insights…",
+];
+
+const [currentStep, setCurrentStep] = useState(0);
+const [completedSteps, setCompletedSteps] = useState<number[]>([]);
+
+useEffect(() => {
+  const interval = setInterval(() => {
+    setCurrentStep(prev => {
+      if (prev < steps.length - 1) {
+        setCompletedSteps(c => [...c, prev]);
+        return prev + 1;
+      }
+      return prev;
+    });
+  }, 40);
+
+  return () => clearInterval(interval);
+}, []);
+
+const progress = ((completedSteps.length + 1) / steps.length) * 100;
+
   return createPortal(
-    // By just having the 'show' class, we avoid the initial 'hidden-init' state
-    // that was causing the layout shift. The animation can be handled
-    // purely in CSS with @keyframes.
     <div className="pm-overlay">
       <div className="pm-container">
         <div className="pm-loader"></div>
@@ -17,13 +37,42 @@ export default function ProcessingModal() {
         <p className="pm-subtitle">
           Hang tight while we analyze your conversations.json
         </p>
-        <div className="pm-steps">
-          <p>• Parsing conversations</p>
-          <p>• Analyzing prompts</p>
-          <p>• Generating insights</p>
-        </div>
+        {/* Progress bar */}
+<div className="pm-progress-bar">
+  <div
+    className="pm-progress-fill"
+    style={{ width: `${progress}%` }}
+  />
+</div>
+
+{/* Step list */}
+<div className="pm-steps-list">
+  {steps.map((step, index) => (
+    <div
+      key={index}
+      className={`pm-step-row 
+        ${index === currentStep ? "active-step" : ""} 
+        ${completedSteps.includes(index) ? "completed-step" : ""}`}
+    >
+      <div className="pm-step-icon">
+        {completedSteps.includes(index) ? (
+          <div className="pm-step-check">✔</div>
+        ) : index === currentStep ? (
+          <div className="pm-step-loading"></div>
+        ) : (
+          <div className="pm-step-idle"></div>
+        )}
       </div>
-    </div>, // The JSX to portal
-    document.body // The destination
+
+      <span className="pm-step-text">
+        {step}
+      </span>
+    </div>
+  ))}
+</div>
+
+      </div>
+    </div>, 
+    document.body 
   );
 }

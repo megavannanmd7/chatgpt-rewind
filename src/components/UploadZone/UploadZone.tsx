@@ -1,5 +1,7 @@
 import { useRef, useState } from "react";
 import "./UploadZone.css";
+import { Upload, FileJson } from "lucide-react";
+
 
 interface UploadZoneProps {
   onFileSelected: (file: File) => void;
@@ -48,11 +50,12 @@ export default function UploadZone({ onFileSelected }: UploadZoneProps) {
       <div className="uploadzone-content">
         <div className={`upload-icon-wrapper ${isDragOver ? "active" : ""}`}>
           {isDragOver ? (
-            <span className="upload-icon json">📄</span>
-          ) : (
-            <span className="upload-icon">⬆️</span>
-          )}
+          <FileJson className="upload-icon json-icon" />
+            ) : (
+          <Upload className="upload-icon upload-main-icon" />
+                )}
         </div>
+
 
         <p className="upload-title">
           {isDragOver ? (

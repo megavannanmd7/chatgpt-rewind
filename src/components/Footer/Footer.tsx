@@ -4,7 +4,7 @@ export default function Footer() {
   return (
     <footer className="footer">
       <p className="footer-text">
-        Made with 💚 by <strong>Megavannan</strong> • Your data stays on your device
+        Crafted with 💚 by <strong>Megavannan</strong>, powered by a few prompts.
       </p>
     </footer>
   );

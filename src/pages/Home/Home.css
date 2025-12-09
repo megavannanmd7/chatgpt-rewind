@@ -121,3 +121,29 @@
 }
 
 .hidden { display: none; }
+
+/* Soft teal glowing top background (like Rewind '25) */
+.hero-glow {
+  position: relative;
+}
+
+.hero-glow::before {
+  content: "";
+  position: absolute;
+  top: -140px; /* moves glow upward */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 480px;
+
+  background: radial-gradient(
+    circle at center,
+    rgba(44, 197, 167, 0.22),
+    rgba(44, 197, 167, 0.08),
+    transparent 70%
+  );
+
+  filter: blur(90px);
+  z-index: -1;
+  pointer-events: none;
+}

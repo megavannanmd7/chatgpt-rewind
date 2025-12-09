@@ -79,11 +79,11 @@ export default function Dashboard() {
         {/* 1. Hero Metrics */}
         <section className="hero-metrics">
           <MetricCard title="Total Prompts" value={stats.totalPrompts} icon={MessageSquare} highlight infoText="Total number of prompts sent in 2025." />
-          <MetricCard title="Total Words" value={stats.totalWords} icon={FileText} infoText="Total words across all prompts." />
-          <MetricCard title="Active Days" value={stats.activeDays} icon={Calendar} infoText="Days you used ChatGPT." />
-          <MetricCard title="Conversations" value={stats.totalConversations} icon={MessagesSquare} infoText="Total conversation threads." />
+          <MetricCard title="Total Tokens" value={stats.totalWords} icon={FileText} infoText="A token is a small piece of text (a word or part of a word) that an AI model uses to read and understand your input. Here, for Eg: 'int a = 18', There're 4 tokens, they're 'int','a','=','18'." />
+          <MetricCard title="Active Days" value={stats.activeDays} icon={Calendar} infoText="Days you used ChatGPT this year." />
+          <MetricCard title="Conversations" value={stats.totalConversations} icon={MessagesSquare} infoText="Total conversation opened this year." />
           <MetricCard title="Avg / Day" value={stats.avgPromptsPerDay} icon={TrendingUp} infoText="Prompts per active day." />
-          <MetricCard title="Avg Length" value={stats.avgMessageLength} icon={Type} subtitle="words" infoText="Average words per prompt." />
+          <MetricCard title="Avg Length" value={stats.avgMessageLength} icon={Type} subtitle="tokens" infoText="Average tokens per prompt." />
         </section>
 
         {/* 2. Heatmap */}
@@ -260,25 +260,47 @@ export default function Dashboard() {
               </div>
             </div>
 
-            <div className="card chart-card">
-               <div className="card-head">
-                  <h3>Conversation Sizes</h3>
-                  <InfoTooltip content="Distribution of threads by length." />
-               </div>
-              <div className="chart-area" style={{ height: 200 }}>
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={stats.conversationSizes}>
-                    <XAxis dataKey="range" axisLine={false} tickLine={false} tick={{ fill: "#8b949e", fontSize: 12 }} dy={10} />
-                    <YAxis hide />
-                    <ReTooltip 
-                      cursor={{ fill: 'rgba(255,255,255,0.03)' }}
-                      contentStyle={{ background: '#161b22', border: '1px solid #30363d', borderRadius: '8px' }}
-                    />
-                    <Bar dataKey="count" fill={CHART_COLORS.teal} radius={[6, 6, 0, 0]} barSize={32} />
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
+<div className="card busiest-date-card">
+  <div className="card-head">
+    <h3>Busiest Date of the Year</h3>
+    <InfoTooltip content="Your highest activity date with conversation breakdown." />
+  </div>
+
+  {/* Big date display */}
+  <div className="busiest-date-hero">
+    <div className="bd-date">
+      {new Date(stats.busiestDateOfTheYear.date).toLocaleDateString("en-US", {
+        weekday: "long",
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+      })}
+    </div>
+
+    <div className="bd-count">
+      <span className="number">{stats.busiestDateOfTheYear.count}</span>
+      <span className="label">messages</span>
+    </div>
+  </div>
+
+  {/* Dynamic subtitle */}
+  <p className="bd-subtitle">
+    Your top {stats.busiestDateOfTheYear.conversations.slice(0, 2).length > 1 ? "2 conversations that day were" : "conversation that day was"}
+  </p>
+
+  {/* Top conversations */}
+  <div className="list">
+    {stats.busiestDateOfTheYear.conversations.slice(0, 2).map((c, i) => (
+      <div key={i} className="list-item">
+        <div className="rank">{i + 1}</div>
+        <div className="title">{c.title}</div>
+        <div className="count">{c.count}</div>
+      </div>
+    ))}
+  </div>
+</div>
+
+
 
             <div className="card streak-card col-span-2">
                <div className="card-head">
@@ -392,6 +414,7 @@ export default function Dashboard() {
 
       <footer className="dash-footer">
         <div>ChatGPT Rewind 2025 • All data processed locally</div>
+        <div>  </div>
       </footer>
     </div>
   );
