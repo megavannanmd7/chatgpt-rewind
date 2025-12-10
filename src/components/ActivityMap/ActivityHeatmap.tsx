@@ -84,13 +84,21 @@ export function ActivityHeatmap({ data }: Props) {
     const target = e.target as HTMLDivElement;
     const rect = target.getBoundingClientRect();
     
+    const tooltipWidth = 160;   
+    const padding = 10;
+
+    let x = rect.left + rect.width / 2;
+
+    // Clamp so it never goes outside viewport horizontally
+    x = Math.max(padding, Math.min(x, window.innerWidth - padding - tooltipWidth));
+
     setHoverInfo({
-      // Center tooltip above the dot
-      x: rect.left + rect.width / 2,
+      x,
       y: rect.top,
       date,
       count
     });
+
   };
 
   const monthLabels = useMemo(() => {

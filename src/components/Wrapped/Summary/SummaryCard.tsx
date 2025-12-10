@@ -1,8 +1,8 @@
-import { useRef, useState, useMemo } from "react";
-import { Download, Share2, Sparkles, MessageSquare } from "lucide-react";
+import { useRef, useMemo } from "react";
+import {  Sparkles, MessageSquare } from "lucide-react";
 import type { RewindStats } from "../../../processing";
 import "./SummaryCard.css";
-import html2canvas from "html2canvas";
+// import html2canvas from "html2canvas";
 
 interface Props {
   stats: RewindStats;
@@ -10,7 +10,7 @@ interface Props {
 
 export function SummaryCard({ stats }: Props) {
   const cardRef = useRef<HTMLDivElement>(null);
-  const [isCapturing, setIsCapturing] = useState(false);
+  // const [isCapturing, setIsCapturing] = useState(false);
 
   const topConvo = stats.topConversations[0] || { title: "N/A", messageCount: 0 };
 
@@ -23,54 +23,54 @@ export function SummaryCard({ stats }: Props) {
     );
   }, [stats.topTopics]);
 
-  const handleShare = async () => {
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: 'My ChatGPT Rewind 2025',
-          text: `I unlocked my 2025 AI stats!`,
-          url: window.location.href,
-        });
-      } catch (err) {
-        console.error("Share failed", err);
-      }
-    } else {
-      navigator.clipboard.writeText(window.location.href);
-      alert("Link copied to clipboard!");
-    }
-  };
+  // const handleShare = async () => {
+  //   if (navigator.share) {
+  //     try {
+  //       await navigator.share({
+  //         title: 'My ChatGPT Rewind 2025',
+  //         text: `I unlocked my 2025 AI stats!`,
+  //         url: window.location.href,
+  //       });
+  //     } catch (err) {
+  //       console.error("Share failed", err);
+  //     }
+  //   } else {
+  //     navigator.clipboard.writeText(window.location.href);
+  //     alert("Link copied to clipboard!");
+  //   }
+  // };
 
-  const handleDownload = async () => {
-    if (!cardRef.current) return;
-    setIsCapturing(true);
+  // const handleDownload = async () => {
+  //   if (!cardRef.current) return;
+  //   setIsCapturing(true);
 
-    try {
-      await new Promise(r => setTimeout(r, 150));
+  //   try {
+  //     await new Promise(r => setTimeout(r, 150));
 
-      const elementWidth = cardRef.current.offsetWidth;
-      const targetWidth = 1080; 
-      const scaleFactor = targetWidth / elementWidth;
+  //     const elementWidth = cardRef.current.offsetWidth;
+  //     const targetWidth = 1080; 
+  //     const scaleFactor = targetWidth / elementWidth;
 
-      const canvas = await html2canvas(cardRef.current, {
-        backgroundColor: null, 
-        scale: scaleFactor,
-        useCORS: true,
-        logging: false,
-        scrollY: -window.scrollY,
-      });
+  //     const canvas = await html2canvas(cardRef.current, {
+  //       backgroundColor: null, 
+  //       scale: scaleFactor,
+  //       useCORS: true,
+  //       logging: false,
+  //       scrollY: -window.scrollY,
+  //     });
 
-      const image = canvas.toDataURL("image/png");
-      const link = document.createElement("a");
-      link.href = image;
-      link.download = "chatgpt-rewind-2025-summary.png";
-      link.click();
-    } catch (err) {
-      console.error("Capture failed:", err);
-      alert("Could not save image.");
-    } finally {
-      setIsCapturing(false);
-    }
-  };
+  //     const image = canvas.toDataURL("image/png");
+  //     const link = document.createElement("a");
+  //     link.href = image;
+  //     link.download = "chatgpt-rewind-2025-summary.png";
+  //     link.click();
+  //   } catch (err) {
+  //     console.error("Capture failed:", err);
+  //     alert("Could not save image.");
+  //   } finally {
+  //     setIsCapturing(false);
+  //   }
+  // };
 
   return (
     <div 
@@ -165,14 +165,14 @@ export function SummaryCard({ stats }: Props) {
       </div>
 
       {/* 4. Footer Actions */}
-      <div className="sum-actions" data-html2canvas-ignore="true">
+      {/* <div className="sum-actions" data-html2canvas-ignore="true">
         <button className="sum-btn primary" onClick={handleDownload} disabled={isCapturing}>
           <Download size={18} /> {isCapturing ? "Saving..." : "Save"}
         </button>
         <button className="sum-btn secondary" onClick={handleShare}>
           <Share2 size={18} /> Share
         </button>
-      </div>
+      </div> */}
 
     </div>
   );

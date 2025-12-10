@@ -103,7 +103,20 @@
 
 /* Mobile */
 @media (max-width:700px) {
-  .heatmap-weeks-inner { gap:3px; }
+  .heatmap-weeks {
+    overflow-x: auto;     
+    overflow-y: visible; 
+    padding-bottom: 14px; 
+  }
+  .weekday-row {
+    height: 10px;           
+    font-size: 9px;         
+    line-height: 10px;
+  }
+  .heatmap-weekdays {
+    gap: 3px;               
+  }
+  .heatmap-weeks-inner { width: max-content;  }
   .heatmap-column { gap: 3px; }
   .heat-dot { width:10px; height:10px; }
 }
