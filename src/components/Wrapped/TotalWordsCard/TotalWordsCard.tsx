@@ -8,14 +8,12 @@ interface Props {
 }
 
 export default function TotalWordsCard({ totalWords, totalCharacters }: Props) {
-  // Safety check to prevent .toLocaleString() crash on undefined
   const valWords = totalWords || 0;
   const valChars = totalCharacters || 0;
 
   const formattedWords = valWords.toLocaleString();
   const formattedChars = valChars.toLocaleString();
 
-  // Enhanced "Fun Facts" with diverse categories
   const getFunFact = (chars: number) => {
 if (chars > 5000000) 
   return "You've typed more words than most people speak in an entire year. 🧠💬";

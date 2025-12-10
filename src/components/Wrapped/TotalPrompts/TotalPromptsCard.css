@@ -1,5 +1,3 @@
-/* TotalPromptsCard.css */
-
 .tpc-base {
   justify-content: center;
   gap: 20px;
@@ -9,7 +7,7 @@
 .tpc-icon-box {
   width: 64px;
   height: 64px;
-  background: rgba(44, 197, 167, 0.1); /* Subtle teal tint */
+  background: rgba(44, 197, 167, 0.1); 
   border-radius: 20px;
   display: flex;
   align-items: center;
@@ -37,19 +35,14 @@
 
 /* 3. Hero Number */
 .tpc-hero-number {
-  font-size: 84px; /* Big and bold */
+  font-size: 84px;
   font-weight: 800;
   margin: 0;
   line-height: 1;
   /* The signature gradient from your reference */
-  background: linear-gradient(135deg, #f2c94c 0%, #f2994a 100%); /* Gold/Orange gradient */
-  /* OR try the Teal/Gold one: */
-  /* background: linear-gradient(90deg, #f2c94c, #2cc5a7); */
-  
+  background: linear-gradient(135deg, #f2c94c 0%, #f2994a 100%); 
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  
-  /* Slight drop shadow to lift it off the dark background */
   filter: drop-shadow(0 4px 10px rgba(0,0,0,0.3));
 }
 

@@ -1,6 +1,6 @@
 /* --- Main Container --- */
 .howto-container {
-  max-width: 1280px;      /* Increased from 1100px */
+  max-width: 1280px;      
   margin: 0 auto;
   padding: 40px 24px;
   color: #e6edf3;
@@ -46,10 +46,10 @@
 .howto-card {
   background: #161b22;
   border: 1px solid #2a2f36;
-  border-radius: 16px;    /* Slightly rounder */
-  padding: 32px 24px;     /* Increased padding (was 20px 18px) */
+  border-radius: 16px;   
+  padding: 32px 24px;     
   transition: 0.25s ease;
-  height: 100%;           /* Ensures cards fill height if content varies */
+  height: 100%;          
 }
 
 .howto-card:hover {
@@ -64,8 +64,8 @@
 }
 
 .howto-icon {
-  width: 56px;            /* Increased from 44px */
-  height: 56px;           /* Increased from 44px */
+  width: 56px;            
+  height: 56px;         
   border-radius: 14px;
   background: linear-gradient(to bottom right, rgba(44, 197, 167, 0.2), rgba(44, 197, 167, 0.05));
   display: flex;
@@ -96,14 +96,14 @@
 
 /* Card Text */
 .howto-card-title {
-  font-size: 20px;        /* Increased from 16px */
+  font-size: 20px;        
   font-weight: 600;
   margin-bottom: 8px;
-  margin-top: 16px;       /* Added spacing between icon and title */
+  margin-top: 16px;      
 }
 
 .howto-card-desc {
-  font-size: 16px;        /* Increased from 14px */
+  font-size: 16px;        
   color: #9ba3ae;
   line-height: 1.6;
 }

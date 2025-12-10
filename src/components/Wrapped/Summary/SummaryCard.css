@@ -1,8 +1,5 @@
-/* SummaryCard.css */
-
 .summary-card-standalone {
   isolation: isolate;
-  /* Background is now handled inline in TSX for gradients */
 }
 
 /* --- Marquee --- */
@@ -34,7 +31,6 @@
 .sum-spotlight {
   position: absolute;
   top: 0; left: 0; width: 100%; height: 100%;
-  /* Subtler spotlight to match new colorful BG */
   background: radial-gradient(circle at top center, rgba(255, 255, 255, 0.1), transparent 70%);
   z-index: 0; pointer-events: none;
 }
@@ -65,7 +61,6 @@
 .sum-header h1 {
   font-size: 28px;
   font-weight: 900; letter-spacing: 2px;
-  /* FIX: Removed gradient text to solve the "White Box" issue */
   color: #ffffff; 
   background: none;
   -webkit-text-fill-color: initial;
@@ -78,18 +73,16 @@
 .sum-grid {
   display: grid; 
   grid-template-columns: 1fr 1fr; 
-  /* INCREASED GAP from 8px to 12px to fix "clumsy" look */
   gap: 12px; 
   width: 100%;
 }
 
 .sum-stat-box {
   border-radius: 14px; 
-  padding: 14px 10px; /* Slightly more padding */
+  padding: 14px 10px; 
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  /* CHANGED: Solid opaque background that stands out */
   background-color: #1e293b; 
-  border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle border for definition */
+  border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
@@ -111,11 +104,10 @@
 /* Top Conversation Box */
 .sum-top-convo {
   width: 100%; text-align: center;
-  /* Match the opaque style of other cards */
   background-color: #1e293b; 
   padding: 18px;
   border-radius: 16px;
-  border: 1px solid rgba(44, 197, 167, 0.3); /* Green tint border */
+  border: 1px solid rgba(44, 197, 167, 0.3);
   box-shadow: 0 4px 15px rgba(0,0,0,0.3);
   display: flex; flex-direction: column; justify-content: center;
 }

@@ -44,10 +44,8 @@ export interface RewindStats {
   activityByDay: { day: string; count: number }[];
   activityByHour: { hour: string; count: number }[];
 
-  // 1. The Day of the Week (e.g., "Monday")
   busiestDayOfWeek: string;
 
-  // 2. The Specific Date (e.g., "2025-05-20") with deep dive details
   busiestDateOfTheYear: {
     date: string;
     count: number;

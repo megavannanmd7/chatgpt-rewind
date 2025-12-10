@@ -17,7 +17,7 @@
 .tcc-icon-circle {
   width: 52px;
   height: 52px;
-  background: rgba(99, 102, 241, 0.15); /* Indigo tint */
+  background: rgba(99, 102, 241, 0.15); 
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   margin-bottom: 13px;
@@ -30,7 +30,7 @@
   font-size: 15px;
   font-weight: 700;
   letter-spacing: 1.5px;
-  color: #a5b4fc; /* Light indigo */
+  color: #a5b4fc; 
   text-transform: uppercase;
   margin: 0;
   opacity: 0.9;
@@ -41,7 +41,6 @@
   font-weight: 800;
   margin: 6px 0;
   line-height: 1;
-  /* Indigo to White Gradient */
   background: linear-gradient(180deg, #e0e7ff 20%, #6366f1 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -80,7 +79,7 @@
 .tcc-rank-box {
   width: 28px;
   height: 28px;
-  border-radius: 8px; /* Squircle */
+  border-radius: 8px; 
   display: flex;
   align-items: center;
   justify-content: center;
@@ -145,7 +144,7 @@
   align-items: center;
   gap: 4px;
   font-size: 11px;
-  color: #818cf8; /* Indigo stats */
+  color: #818cf8; 
   opacity: 0.9;
 }
 

@@ -3,13 +3,13 @@
 .adc-base {
   justify-content: center;
   gap: 20px;
-  overflow: hidden; /* Keep grid contained */
+  overflow: hidden; 
 }
 
 /* --- 1. Background Grid Animation --- */
 .adc-grid-bg {
   position: absolute;
-  inset: -20px; /* Bleed slightly */
+  inset: -20px; 
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 12px;
@@ -29,7 +29,7 @@
 /* Stagger animations randomly-ish */
 .adc-grid-square:nth-child(2n) { animation-duration: 6s; }
 .adc-grid-square:nth-child(3n) { animation-duration: 5s; animation-delay: 1s; }
-.adc-grid-square:nth-child(5n) { background: #f2c94c; } /* Sprinkle some gold squares */
+.adc-grid-square:nth-child(5n) { background: #f2c94c; } 
 
 @keyframes pulseGrid {
   0% { transform: scale(0.9); opacity: 0.05; }
@@ -70,7 +70,6 @@
   font-weight: 800;
   margin: 0;
   line-height: 1;
-  /* Green to Yellow Gradient */
   background: linear-gradient(180deg, #2cc5a7 0%, #f2c94c 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -88,7 +87,7 @@
 }
 
 .adc-subtitle-second {
-  margin-top: -15px; /* adjust to taste */
+  margin-top: -15px; 
 }
 
 /* --- 4. Progress Bar --- */

@@ -1,5 +1,3 @@
-/* TotalWordsCard.css */
-
 .twc-base {
   justify-content: center;
   gap: 16px;
@@ -9,7 +7,7 @@
 .twc-icon-box {
   width: 64px;
   height: 64px;
-  background: rgba(59, 130, 246, 0.15); /* Blue tint */
+  background: rgba(59, 130, 246, 0.15); 
   border-radius: 20px;
   display: flex;
   align-items: center;
@@ -20,7 +18,7 @@
 }
 
 .twc-icon {
-  color: #60a5fa; /* Light blue */
+  color: #60a5fa; 
 }
 
 /* 2. Label */
@@ -39,7 +37,6 @@
   font-weight: 800;
   margin: 0;
   line-height: 1;
-  /* Blue to Purple Gradient */
   background: linear-gradient(135deg, #60a5fa 0%, #c084fc 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -99,10 +96,6 @@
   .twc-hero-number { font-size: 52px; }
   .twc-sub-number { font-size: 32px; }
 }
-
-/* TotalWordsCard.css updates */
-
-/* ... (keep your existing icon/hero styles) ... */
 
 /* Footer Fact */
 .twc-footer {

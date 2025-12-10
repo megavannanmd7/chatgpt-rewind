@@ -52,8 +52,7 @@ export function SummaryCard({ stats }: Props) {
       const scaleFactor = targetWidth / elementWidth;
 
       const canvas = await html2canvas(cardRef.current, {
-        // MATCH THE GRADIENT HERE for the download
-        backgroundColor: null, // Transparent so the CSS gradient shines through
+        backgroundColor: null, 
         scale: scaleFactor,
         useCORS: true,
         logging: false,
@@ -99,7 +98,7 @@ export function SummaryCard({ stats }: Props) {
             className={`sum-marquee-row ${i % 2 === 0 ? 'scroll-left' : 'scroll-right'}`}
             style={{ 
               animationDuration: `${35 + i * 5}s`,
-              opacity: 0.06 // Lower opacity so it doesn't clash with the colorful bg
+              opacity: 0.06 
             }}
           >
             {text} • {text} • {text} 
@@ -119,7 +118,7 @@ export function SummaryCard({ stats }: Props) {
           flexDirection: 'column',
           justifyContent: 'space-evenly', 
           alignItems: 'center',
-          gap: '16px' // Increased gap for better spacing
+          gap: '16px' 
         }}
       >
         

@@ -3,13 +3,12 @@ import NeonCardBase from "../NeonCardBase/NeonCardBase";
 import "./MostProductiveDayCard.css";
 
 interface Props {
-  day: string; // "Mon", "Tue", etc.
-  count: number; // Total prompts on that day
+  day: string; 
+  count: number; 
 }
 
 export default function MostProductiveDayCard({ day, count }: Props) {
   
-  // Enhanced Archetypes with specific Icons and descriptions
   const getPersona = (d: string) => {
     switch(d) {
       case "Mon": return { title: "The Early Bird", icon: Coffee, desc: "Starting the week with maximum velocity." };

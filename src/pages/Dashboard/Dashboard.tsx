@@ -1,23 +1,20 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import { 
   Sparkles, ArrowLeft, MessageSquare, FileText, Calendar, 
   MessagesSquare, TrendingUp, Type, CalendarDays, Clock, 
-  Flame, Mic, Image as ImageIcon, Upload, 
+  Flame, Mic, Image as ImageIcon, Upload, Film,
   Moon, Zap, Trophy 
 } from "lucide-react";
-
 import {
   ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip as ReTooltip,
   AreaChart, Area, CartesianGrid,
 } from "recharts";
-
 import { MetricCard } from "../../components/MetricCard/MetricCard";
 import { ActivityHeatmap } from "../../components/ActivityMap/ActivityHeatmap";
 import { InfoTooltip } from "../../components/InfoToolTip/InfoToolTip";
 import "./Dashboard.css";
-
 import type { RewindStats } from "../../processing/types";
 
 const CHART_COLORS = {
@@ -57,10 +54,16 @@ export default function Dashboard() {
           <span className="dot" />
           <span className="brand">Rewind '25</span>
         </div>
-        <button className="back-btn" onClick={() => navigate("/")}>
-          <ArrowLeft size={16} />
-          <span>Back to Home</span>
-        </button>
+        <div className="dash-header-nav">
+          <button className="back-btn" onClick={() => navigate("/")}>
+            <ArrowLeft size={16} />
+            <span>Back to Home</span>
+          </button>
+          <Link to="/wrapped" className="back-btn">
+            <Film size={16} />
+            <span>View Wrapped Story</span>
+          </Link>
+        </div>
       </header>
 
       <main className="dash-main container">

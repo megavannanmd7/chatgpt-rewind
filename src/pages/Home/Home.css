@@ -8,12 +8,10 @@
   align-items: center;
 }
 
-/* Find this class in Home.css */
 .home-banner-wrapper {
   width: 100%;
-  /* We remove max-width here and let the child handle sizing */
-  display: flex;           /* Turn on Flexbox */
-  justify-content: center; /* Force child to center immediately */
+  display: flex;         
+  justify-content: center; 
   margin-bottom: 20px;
 }
 
@@ -54,8 +52,8 @@
 .upload-section {
   margin-top: 20px;
   display: flex;
-  flex-direction: column; /* CRITICAL FIX: Stacks box and link vertically */
-  align-items: center;    /* CRITICAL FIX: Centers them */
+  flex-direction: column; 
+  align-items: center;  
   width: 100%;
   max-width: 1200px;
   padding: 0 10px;
@@ -122,7 +120,6 @@
 
 .hidden { display: none; }
 
-/* Soft teal glowing top background (like Rewind '25) */
 .hero-glow {
   position: relative;
 }
@@ -130,7 +127,7 @@
 .hero-glow::before {
   content: "";
   position: absolute;
-  top: -140px; /* moves glow upward */
+  top: -140px; 
   left: 50%;
   transform: translateX(-50%);
   width: 900px;

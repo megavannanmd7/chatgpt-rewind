@@ -4,7 +4,7 @@ import "./BusiestDateCard.css";
 
 interface Props {
   busiestDate: {
-    date: string; // "2025-05-20"
+    date: string; 
     count: number;
     conversations: { title: string; count: number }[];
   };
@@ -53,7 +53,7 @@ export default function BusiestDateCard({ busiestDate }: Props) {
       <div className="bdc-list-wrapper">
         <p className="bdc-list-title">TOP TOPICS THAT DAY</p>
         <div className="bdc-list">
-          {busiestDate.conversations.slice(0, 3).map((c, i) => (
+          {busiestDate.conversations.slice(0, 2).map((c, i) => (
             <div key={i} className="bdc-item">
               <div className="bdc-item-bullet" />
               <div className="bdc-item-info">

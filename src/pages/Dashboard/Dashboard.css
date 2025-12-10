@@ -1,6 +1,3 @@
-/* Dashboard.css - Rewind '25 theme */
-
-/* --- RESET & BASICS --- */
 h1, h2, h3, h4, p { margin: 0; }
 button { font-family: inherit; }
 
@@ -33,6 +30,13 @@ button { font-family: inherit; }
   background: rgba(7, 16, 24, 0.85);
   border-bottom: 1px solid rgba(255, 255, 255, 0.03);
 }
+
+.dash-header-nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;      
+}
+
 
 .dash-left { display: flex; align-items: center; gap: 10px; }
 .dot { 
@@ -154,7 +158,7 @@ button { font-family: inherit; }
 
 .busiest-date-card {
   padding: 28px !important;
-  min-height: 330px;        /* makes card visually heavier */
+  min-height: 330px;       
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -193,8 +197,8 @@ button { font-family: inherit; }
 }
 
 .busiest-date-card .list-item {
-  margin-bottom: 10px;    /* adds vertical spacing */
-  padding: 14px 14px;     /* slightly bigger */
+  margin-bottom: 10px;    
+  padding: 14px 14px;    
 }
 
 .busiest-date-card .list-item:last-child {
@@ -292,7 +296,6 @@ button { font-family: inherit; }
 /* --- MULTIMODAL GRID --- */
 .multimodal-grid {
   display: grid;
-  /* distinct change: auto-fit allows cards to stretch if one is missing */
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); 
   gap: 16px;
 }

@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
+import { Home, LayoutDashboard } from "lucide-react";
 import "./WrappedPage.css";
 import type { RewindStats } from "../../../processing";
-
-// Card Imports
 import { WelcomeCard } from "../Welcome/WelcomeCard";
 import TotalPromptsCard from "../TotalPrompts/TotalPromptsCard";
 import ActiveDaysCard from "../ActiveDaysCard/ActiveDaysCard";
@@ -13,7 +13,7 @@ import TotalWordsCard from "../TotalWordsCard/TotalWordsCard";
 import BusiestDateCard from "../BusiestDateCard/BusiestDateCard";
 import MostProductiveDayCard from "../MostProductiveDayCard/MostProductiveDayCard";
 import WordCloudCard from "../WordCloudCard/WordCloudCard";
-import { SummaryCard } from "../Summary/SummaryCard"; // Added
+import { SummaryCard } from "../Summary/SummaryCard"; 
 
 interface WrappedPageProps {
   stats?: RewindStats;
@@ -158,10 +158,32 @@ export function WrappedPage({ stats: propsStats }: WrappedPageProps) {
     return <div className="wrapped-loading">Loading your Rewind...</div>;
   }
 
-  // const progressPercent = Math.round(((index + 1) / count) * 100);
 
   return (
+    <>
+<div className="wrapped-nav-links">
+  {/* Desktop buttons */}
+  <Link to="/dashboard" className="nav-btn-link desktop-only">
+    <span>Dashboard</span>
+  </Link>
+
+  <Link to="/" className="nav-btn-link desktop-only">
+    <span>Home</span>
+  </Link>
+
+  {/* Mobile: icon-only buttons */}
+  <Link to="/" className="nav-icon-btn mobile-only home-btn">
+    <Home size={20} />
+  </Link>
+
+  <Link to="/dashboard" className="nav-icon-btn mobile-only dashboard-btn">
+    <LayoutDashboard size={20} />
+  </Link>
+</div>
+
+
     <div className="wrapped-page">
+
       <div className="story-progress">
         {cards.map((_, i) => (
           <div key={i} className="progress-segment">
@@ -186,6 +208,7 @@ export function WrappedPage({ stats: propsStats }: WrappedPageProps) {
       <button className="nav-btn left" onClick={goPrev} disabled={index === 0}>←</button>
       <button className="nav-btn right" onClick={goNext} disabled={index === count - 1}>→</button>
     </div>
+    </>
   );
 }
 

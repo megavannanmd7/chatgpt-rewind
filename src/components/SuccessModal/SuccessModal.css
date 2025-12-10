@@ -3,8 +3,8 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;  /* Forces full screen width */
-  height: 100vh; /* Forces full screen height */
+  width: 100vw; 
+  height: 100vh; 
   background: rgba(13, 17, 23, 0.88);
   backdrop-filter: blur(4px);
   display: flex;
@@ -12,7 +12,6 @@
   justify-content: center;
   z-index: 60;
   padding: 20px;
-  /* Apply the animation directly to the overlay to prevent layout shift */
   animation: fadeInOverlay 0.3s ease-out forwards;
 }
 
@@ -26,7 +25,6 @@
   max-width: 420px;
   width: 100%;
   text-align: center;
-  /* Add a subtle slide-up animation for the container */
   animation: slideUp 0.3s ease-out;
 }
 

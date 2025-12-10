@@ -1,15 +1,11 @@
-/* Find .pb-container in PrivacyBanner.css and REPLACE it with this: */
 .pb-container {
-  /* Layout & Positioning */
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 12px;
-  
-  /* Sizing - Controlled here now */
   width: 100%;
-  max-width: 850px;      /* Stops it from getting too big */
+  max-width: 850px;     
   box-sizing: border-box;
 
   /* Styling */
@@ -17,13 +13,10 @@
   border: 1px solid #30363d;
   padding: 12px 40px;
   border-radius: 10px;
-
-  /* IMPORTANT: Remove the 'animation' line completely to stop the jump */
-  /* animation: fadeIn 0.3s ease-out;  <-- REMOVE THIS */
 }
 
 .pb-message {
-  text-align: center; /* Ensure the text itself is centered */
+  text-align: center; 
   color: #c9d1d9;
   font-size: 14px;
   line-height: 1.4;
@@ -36,7 +29,6 @@
   font-size: 18px;
   cursor: pointer;
   transition: 0.2s ease;
-  /* Position the button independently on the right side */
   position: absolute;
   right: 12px;
   top: 50%;
@@ -46,18 +38,6 @@
 .pb-close:hover {
   color: #e6edf3;
 }
-
-/* Fade in animation */
-/* @keyframes fadeIn {
-  from {
-    opacity: 0;
-    /* transform: translateY(6px); */
-  /* } */
-  /* to { */
-    /* opacity: 1; */
-    /* transform: translateY(0); */
-  /* } */
-/* } */ 
 
 /* ---------------- RESPONSIVE ---------------- */
 

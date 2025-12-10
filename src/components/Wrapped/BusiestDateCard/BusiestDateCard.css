@@ -16,7 +16,7 @@
 .bdc-icon-box {
   width: 56px;
   height: 56px;
-  background: rgba(244, 63, 94, 0.1); /* Rose tint */
+  background: rgba(244, 63, 94, 0.1); 
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   border: 1px solid rgba(244, 63, 94, 0.2);
@@ -51,7 +51,7 @@
   width: 120px;
   text-align: center;
   margin: 8px 0;
-  transform: rotate(-3deg); /* Jaunty tilt */
+  transform: rotate(-3deg); 
 }
 
 .bdc-cal-top {

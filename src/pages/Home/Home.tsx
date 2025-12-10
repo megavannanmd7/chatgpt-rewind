@@ -8,7 +8,6 @@ import PrivacyBanner from "../../components/PrivacyBanner/PrivacyBanner";
 import Footer from "../../components/Footer/Footer";
 import { HelpCircle } from "lucide-react"; 
 import { parseConversations } from "../../processing";
-// import { downloadJSON } from "../../processing/downloadJson";
 import { useNavigate } from "react-router-dom";
 
 

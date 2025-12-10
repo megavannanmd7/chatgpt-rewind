@@ -5,7 +5,6 @@ import type { Conversation, RewindStats } from "./types";
 const DAYS = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 const HOURS = Array.from({ length: 24 }, (_, i) => `${i.toString().padStart(2, "0")}:00`);
 
-// STOP_WORDS same as yours...
 const STOP_WORDS = new Set([
   "the","and","for","with","that","this","from","your","have","are",
   "was","can","you","not","but","what","all","were","when","how",
@@ -77,7 +76,7 @@ export function parseConversations(conversations: Conversation[]): RewindStats {
   const topicCount: Record<string, number> = {};
 
   // improved counters
-  let voiceMessagesCount = 0; // total voice messages (if you want per-message metric)
+  let voiceMessagesCount = 0; // total voice messages 
   const voiceConvoSet = new Set<string>(); // unique conversations with voice
   const seenImageKeys = new Set<string>(); // dedupe images globally
   const seenFileKeys = new Set<string>(); // dedupe files globally

@@ -4,13 +4,12 @@ import NeonCardBase from "../NeonCardBase/NeonCardBase";
 import "./BusiestHourCard.css";
 
 interface Props {
-  hour: string; // Format "14:00" or "02:00"
+  hour: string; 
 }
 
 export default function BusiestHourCard({ hour }: Props) {
   const hourNum = parseInt(hour.split(":")[0], 10);
 
-  // Determine Text, Icon, and Color Theme based on 3-hour blocks
   const { text, Icon, themeClass } = useMemo(() => {
     if (hourNum >= 0  && hourNum < 3)  return { text: "The Night Owl 🦉", Icon: Moon, themeClass: "theme-night" };
 

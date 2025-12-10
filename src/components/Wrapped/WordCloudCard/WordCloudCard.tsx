@@ -18,9 +18,6 @@ export default function WordCloudCard({ topics }: Props) {
   // Take top 10
   const topWords = sorted.slice(0, 10);
 
-  // Largest count for ratios
-//   const maxCount = topWords[0]?.count || 1;
-
   // Create 10 size levels smoothly
   const getSizeClass = (index: number) => `wc-size-${index}`;
 

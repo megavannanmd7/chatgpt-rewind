@@ -1,9 +1,7 @@
-/* WelcomeCard.css */
-
 /* Center everything vertically better */
 .welcome-card-base {
   justify-content: center;
-  gap: 24px; /* Space between elements */
+  gap: 24px; 
 }
 
 /* 1. Glowing Icon Box */
@@ -41,7 +39,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0; /* Tight spacing between lines */
+  gap: 0; 
   margin-bottom: 8px;
 }
 
@@ -69,12 +67,12 @@
   line-height: 1.5;
   color: #9ba3ae;
   margin: 0;
-  max-width: 280px; /* Force line break nicely */
+  max-width: 280px; 
 }
 
 /* 5. Swipe Hint */
 .swipe-hint-container {
-  margin-top: 48px; /* Push it down a bit */
+  margin-top: 48px; 
   display: flex;
   align-items: center;
   justify-content: center;
