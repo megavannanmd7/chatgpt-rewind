@@ -1,4 +1,4 @@
-import { useMemo, useState, type MouseEvent } from 'react';
+import { useMemo, useState, type MouseEvent, type CSSProperties } from 'react';
 import './ActivityHeatmap.css';
 
 interface HeatDatum {
@@ -17,7 +17,6 @@ function toISO(d: Date) {
   return d.toISOString().split('T')[0];
 }
 
-// Format: "Jan 20, 2025"
 function formatDate(iso: string) {
   const date = new Date(iso + 'T00:00:00Z');
   return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
@@ -32,10 +31,8 @@ export function ActivityHeatmap({ data }: Props) {
     return map;
   }, [data]);
 
-  // 1. Calculate Weeks AND find the Max value for normalization
   const { weeks, max } = useMemo(() => {
     const start = new Date(START);
-    // Align to the Sunday before Jan 1
     start.setUTCDate(start.getUTCDate() - start.getUTCDay());
     
     const end = new Date(END);
@@ -43,15 +40,13 @@ export function ActivityHeatmap({ data }: Props) {
     
     let cur = new Date(start);
     let week: { date: string; count: number }[] = [];
-    let maxVal = 0; // Start at 0
+    let maxVal = 0; 
 
     while (cur <= end || week.length > 0) {
       if (cur > end && week.length === 0) break;
 
       const iso = toISO(cur);
       const count = dataMap.get(iso) ?? 0;
-      
-      // Track the highest number of prompts in a single day
       if (count > maxVal) maxVal = count;
 
       week.push({ date: iso, count });
@@ -62,43 +57,27 @@ export function ActivityHeatmap({ data }: Props) {
       }
       cur.setUTCDate(cur.getUTCDate() + 1);
     }
-    return { weeks: weeksArr, max: maxVal > 0 ? maxVal : 1 }; // Prevent division by zero
+    return { weeks: weeksArr, max: maxVal > 0 ? maxVal : 1 }; 
   }, [dataMap]);
 
-  // 2. Normalize colors based on user's specific Max
   function level(count: number) {
     if (count === 0) return 0;
-    // Calculate percentage of user's personal best
     const ratio = count / max; 
-
-    // Distribute levels based on that percentage
-    if (ratio >= 0.75) return 4; // Top 25% of activity days
+    if (ratio >= 0.75) return 4; 
     if (ratio >= 0.50) return 3;
     if (ratio >= 0.25) return 2;
-    return 1; // Any activity > 0 gets at least level 1
+    return 1; 
   }
 
   const handleMouseEnter = (e: MouseEvent, date: string, count: number) => {
-    // Get button position for more stable tooltip positioning if needed, 
-    // but cursor coordinates (e.clientX) usually work well for heatmaps.
     const target = e.target as HTMLDivElement;
     const rect = target.getBoundingClientRect();
-    
     const tooltipWidth = 160;   
     const padding = 10;
-
     let x = rect.left + rect.width / 2;
-
-    // Clamp so it never goes outside viewport horizontally
     x = Math.max(padding, Math.min(x, window.innerWidth - padding - tooltipWidth));
 
-    setHoverInfo({
-      x,
-      y: rect.top,
-      date,
-      count
-    });
-
+    setHoverInfo({ x, y: rect.top, date, count });
   };
 
   const monthLabels = useMemo(() => {
@@ -125,7 +104,6 @@ export function ActivityHeatmap({ data }: Props) {
     <div className="heatmap-card">
       <h3 className="heatmap-title">Activity Overview</h3>
 
-      {/* Tooltip */}
       {hoverInfo && (
         <div 
           className="custom-tooltip"
@@ -138,25 +116,11 @@ export function ActivityHeatmap({ data }: Props) {
         </div>
       )}
 
-      {/* Month Labels */}
-      <div className="heatmap-months">
-        <div className="heatmap-month-spacer" />
-        <div className="heatmap-months-inner">
-          {monthLabels.map((m, i) => (
-            <div
-              key={i}
-              className="heatmap-month-label"
-              style={{ left: `${m.weekIndex * 16}px` }} /* 12px dot + 4px gap = 16px */
-            >
-              {m.label}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="heatmap-wrapper">
-        {/* Weekday Labels */}
+      <div className="heatmap-layout">
+        
+        {/* LEFT COLUMN: Fixed Weekday Labels */}
         <div className="heatmap-weekdays">
+          <div className="weekday-spacer"></div> 
           <div className="weekday-row"></div>    
           <div className="weekday-row">Mon</div> 
           <div className="weekday-row"></div>    
@@ -166,9 +130,24 @@ export function ActivityHeatmap({ data }: Props) {
           <div className="weekday-row"></div>    
         </div>
 
-        {/* Heatmap Grid */}
-        <div className="heatmap-weeks">
-          <div className="heatmap-weeks-inner">
+        {/* RIGHT COLUMN: Scrollable Container (Months + Grid) */}
+        <div className="heatmap-scrollable">
+          
+          {/* Months Row */}
+          <div className="heatmap-months">
+            {monthLabels.map((m, i) => (
+              <div
+                key={i}
+                className="heatmap-month-label"
+                style={{ '--month-offset-index': m.weekIndex.toString() } as CSSProperties}
+              >
+                {m.label}
+              </div>
+            ))}
+          </div>
+
+          {/* Grid */}
+          <div className="heatmap-grid">
             {weeks.map((week, wi) => (
               <div key={wi} className="heatmap-column">
                 {week.map((day, di) => {
